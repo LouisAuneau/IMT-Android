@@ -5,14 +5,16 @@ import android.os.Bundle
 import android.widget.ListView
 import android.widget.Toast
 import fr.imtatlantique.louisauneau.BooksService
-import kotlinx.android.synthetic.main.activity_books.*
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.logging.Logger
 
+/**
+ * Main activity launched on startup. It mainly manages book retrievement (getBooks()) and fragment loading (displayBooks).
+ */
 class BooksActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.Toast
 
+/**
+ * Fragment that displays the book list using the adapter (BooksAdapter) as well as the custom Book element (BookItemView)
+ */
 class BooksFragment : Fragment() {
 
     private lateinit var listener: OnBookClickListener

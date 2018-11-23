@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 
+/**
+ * Adapter that allows to show books (in a custom UI element) as a list.
+ */
 class BooksAdapter(context: Context, private val books: Array<Book>) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
