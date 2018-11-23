@@ -36,13 +36,13 @@ class BooksFragment : Fragment() {
         booksListView.adapter = BooksAdapter(context!!, books)
         booksListView.setOnItemClickListener { parent, view, position, id ->
             val book: Book = booksListView.adapter.getItem(position) as Book
-            listener.onBookClicked(book)
+            listener.onBookClicked(book, this)
         }
         return view
     }
 
     interface OnBookClickListener {
-        fun onBookClicked(book: Book)
+        fun onBookClicked(book: Book, sourceFragment: Fragment)
     }
 
 }

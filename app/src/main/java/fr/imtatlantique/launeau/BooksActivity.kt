@@ -2,6 +2,7 @@ package fr.imtatlantique.launeau
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.widget.ListView
 import android.widget.Toast
 import fr.imtatlantique.louisauneau.BooksService
@@ -62,7 +63,7 @@ class BooksActivity : AppCompatActivity(), BooksFragment.OnBookClickListener {
     /**
      * Displays book details when a book is clicked.
      */
-    override fun onBookClicked(book: Book) {
+    override fun onBookClicked(book: Book, sourceFragment: Fragment) {
         val fragment = BookFragment()
         val bundle = Bundle()
         bundle.putParcelable("book", book)
@@ -70,6 +71,7 @@ class BooksActivity : AppCompatActivity(), BooksFragment.OnBookClickListener {
 
         supportFragmentManager
             .beginTransaction()
+            .addToBackStack(sourceFragment::class.java.name)
             .replace(R.id.contentContainer, fragment, BookFragment::class.java.name)
             .commit()
     }
