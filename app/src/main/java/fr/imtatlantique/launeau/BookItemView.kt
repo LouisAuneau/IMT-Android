@@ -20,7 +20,7 @@ class BookItemView @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     fun bindView(book: Book?) {
-        title?.text = book?.title
-        price?.text = book?.price.toString()
+        title?.text = book?.title!!.toUpperCase()
+        price?.text = book?.price.toString() + "€"
     }
 }

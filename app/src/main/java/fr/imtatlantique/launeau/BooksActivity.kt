@@ -1,5 +1,6 @@
 package fr.imtatlantique.launeau
 
+import android.content.res.Configuration
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -49,30 +50,44 @@ class BooksActivity : AppCompatActivity(), BooksFragment.OnBookClickListener {
      * Displays the list of books through the fragment.
      */
     fun displayBooks(books: Array<Book>) {
+        // Generating the fragment and it arguments.
         val fragment = BooksFragment()
         val bundle = Bundle()
         bundle.putParcelableArray("books", books)
         fragment.arguments = bundle
 
+        // Setting the frame in which the fragment will be displayed depending on the orientation.
+        val frame: Int =
+            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+                R.id.leftBooksFrame
+            else R.id.mainFrame
+
+        // Displaying the fragment in the selected frame.
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.contentContainer, fragment, BooksFragment::class.java.name)
+            .replace(frame, fragment, BooksFragment::class.java.name)
             .commit()
     }
 
     /**
      * Displays book details when a book is clicked.
      */
-    override fun onBookClicked(book: Book, sourceFragment: Fragment) {
+    override fun onBookClicked(book: Book) {
         val fragment = BookFragment()
         val bundle = Bundle()
         bundle.putParcelable("book", book)
         fragment.arguments = bundle
 
+        // Setting the frame in which the fragment will be displayed depending on the orientation.
+        val frame: Int =
+            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+                R.id.rightBooksFrame
+            else R.id.mainFrame
+
         supportFragmentManager
             .beginTransaction()
-            .addToBackStack(sourceFragment::class.java.name)
-            .replace(R.id.contentContainer, fragment, BookFragment::class.java.name)
+            .addToBackStack(BooksFragment::class.java.name)
+            .replace(frame, fragment, BookFragment::class.java.name)
             .commit()
     }
 }
