@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.TextView
 
 class BooksAdapter(context: Context, private val books: Array<Book>) : BaseAdapter() {
 
@@ -21,7 +20,6 @@ class BooksAdapter(context: Context, private val books: Array<Book>) : BaseAdapt
         return bookItemView
     }
 
-
     override fun getItem(position: Int): Book = books[position]
 
     override fun getItemId(position: Int): Long {
@@ -29,5 +27,4 @@ class BooksAdapter(context: Context, private val books: Array<Book>) : BaseAdapt
     }
 
     override fun getCount(): Int = books.count()
-
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.Toast
 
 class BooksFragment : Fragment() {
 
@@ -32,6 +33,9 @@ class BooksFragment : Fragment() {
         val view = inflater.inflate(R.layout.books_fragment, container, false)
         booksListView = view.findViewById(R.id.booksListView) as ListView
         booksListView.adapter = BooksAdapter(context!!, books)
+        booksListView.setOnItemClickListener { parent, view, position, id ->
+            Toast.makeText(context, (booksListView.adapter.getItem(position) as Book).title, Toast.LENGTH_LONG).show()
+        }
         return view
     }
 
