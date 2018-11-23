@@ -6,7 +6,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.squareup.picasso.Picasso
+import java.util.logging.Logger
 
 /**
  * Fragment representing one book.
@@ -29,6 +32,11 @@ class BookFragment : Fragment() {
         view.findViewById<TextView>(R.id.bookTitle).text = book.title
         view.findViewById<TextView>(R.id.bookPrice).text = book.price + "€"
         view.findViewById<TextView>(R.id.bookDescription).text = book.isbn
+        displayImage(book.cover, view.findViewById<TextView>(R.id.bookCover) as ImageView)
         return view
+    }
+
+    private fun displayImage(url: String, imageView: ImageView) {
+        Picasso.get().load(url).resize(325, 500).into(imageView)
     }
 }
