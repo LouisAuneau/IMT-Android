@@ -2,8 +2,10 @@ package fr.imtatlantique.launeau
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ListView
 import android.widget.Toast
 import fr.imtatlantique.louisauneau.BooksService
+import kotlinx.android.synthetic.main.activity_books.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,14 +15,10 @@ import java.util.logging.Logger
 
 class BooksActivity : AppCompatActivity() {
 
-    private var books: Array<Book>? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        getBooks()
-
         setContentView(R.layout.activity_books)
+        getBooks()
     }
 
     /**
@@ -39,9 +37,23 @@ class BooksActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<Array<Book>>, response: Response<Array<Book>>) {
-                this@BooksActivity.books = response.body()
-                Logger.getLogger(this@BooksActivity::class.java.name).info(books.toString())
+                displayBooks(response.body()!!)
             }
         })
+    }
+
+    /**
+     * Displays the list of books through the fragment.
+     */
+    fun displayBooks(books: Array<Book>) {
+        val fragment = BooksFragment()
+        val bundle = Bundle()
+        bundle.putParcelableArray("books", books)
+        fragment.arguments = bundle
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.contentContainer, fragment, BooksFragment::class.java.name)
+            .commit()
     }
 }
