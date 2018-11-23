@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">LouisAuneau</string>
+    <string name="error_books_retrievement">Impossible de récupérer les livres.</string>
+</resources>
