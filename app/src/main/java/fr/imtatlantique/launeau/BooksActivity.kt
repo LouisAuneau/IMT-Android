@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 /**
  * Main activity launched on startup. It mainly manages book retrievement (getBooks()) and fragment loading (displayBooks).
  */
-class BooksActivity : AppCompatActivity() {
+class BooksActivity : AppCompatActivity(), BooksFragment.OnBookClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +56,21 @@ class BooksActivity : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.contentContainer, fragment, BooksFragment::class.java.name)
+            .commit()
+    }
+
+    /**
+     * Displays book details when a book is clicked.
+     */
+    override fun onBookClicked(book: Book) {
+        val fragment = BookFragment()
+        val bundle = Bundle()
+        bundle.putParcelable("book", book)
+        fragment.arguments = bundle
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.contentContainer, fragment, BookFragment::class.java.name)
             .commit()
     }
 }

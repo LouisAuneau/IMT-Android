@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import android.widget.Toast
-
 /**
  * Fragment that displays the book list using the adapter (BooksAdapter) as well as the custom Book element (BookItemView)
  */
@@ -37,13 +35,14 @@ class BooksFragment : Fragment() {
         booksListView = view.findViewById(R.id.booksListView) as ListView
         booksListView.adapter = BooksAdapter(context!!, books)
         booksListView.setOnItemClickListener { parent, view, position, id ->
-            Toast.makeText(context, (booksListView.adapter.getItem(position) as Book).title, Toast.LENGTH_LONG).show()
+            val book: Book = booksListView.adapter.getItem(position) as Book
+            listener.onBookClicked(book)
         }
         return view
     }
 
     interface OnBookClickListener {
-        fun onNext()
+        fun onBookClicked(book: Book)
     }
 
 }
