@@ -42,7 +42,7 @@ class BooksFragment : Fragment() {
     }
 
     interface OnBookClickListener {
-        fun onBookClicked(book: Book)
+        fun onBookClicked(book: Book?)
     }
 
 }

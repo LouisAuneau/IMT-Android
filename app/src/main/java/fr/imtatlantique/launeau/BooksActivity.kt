@@ -3,11 +3,8 @@ package fr.imtatlantique.launeau
 import android.content.res.Configuration
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.widget.ListView
 import android.widget.Toast
 import fr.imtatlantique.louisauneau.BooksService
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +22,9 @@ class BooksActivity : AppCompatActivity(), BooksFragment.OnBookClickListener {
         getBooks()
     }
 
+    private var books: Array<Book>? = null
+    private var book: Book? = null
+
     /**
      * Get books from the API. Displays a toast in case no book is found.
      */
@@ -41,7 +41,8 @@ class BooksActivity : AppCompatActivity(), BooksFragment.OnBookClickListener {
             }
 
             override fun onResponse(call: Call<Array<Book>>, response: Response<Array<Book>>) {
-                displayBooks(response.body()!!)
+                books = response.body()!!
+                displayBooks(books)
             }
         })
     }
@@ -49,7 +50,7 @@ class BooksActivity : AppCompatActivity(), BooksFragment.OnBookClickListener {
     /**
      * Displays the list of books through the fragment.
      */
-    fun displayBooks(books: Array<Book>) {
+    fun displayBooks(books: Array<Book>?) {
         // Generating the fragment and it arguments.
         val fragment = BooksFragment()
         val bundle = Bundle()
@@ -72,11 +73,15 @@ class BooksActivity : AppCompatActivity(), BooksFragment.OnBookClickListener {
     /**
      * Displays book details when a book is clicked.
      */
-    override fun onBookClicked(book: Book) {
+    override fun onBookClicked(book: Book?) {
+        // Generating the fragment with the book to display
         val fragment = BookFragment()
         val bundle = Bundle()
         bundle.putParcelable("book", book)
         fragment.arguments = bundle
+
+        // Setting state
+        this.book = book
 
         // Setting the frame in which the fragment will be displayed depending on the orientation.
         val frame: Int =
@@ -84,10 +89,40 @@ class BooksActivity : AppCompatActivity(), BooksFragment.OnBookClickListener {
                 R.id.rightBooksFrame
             else R.id.mainFrame
 
+        // Displaying the fragment in the selected frame.
         supportFragmentManager
             .beginTransaction()
             .addToBackStack(BooksFragment::class.java.name)
             .replace(frame, fragment, BookFragment::class.java.name)
             .commit()
     }
+
+    /**
+     * Saving list of books and the current book in the state in case the activity flow is stopped.
+     */
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (book != null)
+            outState?.putParcelable("book", book)
+
+        if (books != null)
+            outState?.putParcelableArray("books", books)
+
+        super.onSaveInstanceState(outState)
+    }
+
+    /**
+     * Restoring the state (list of books and selected book) if they were saved.
+     */
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        book = savedInstanceState?.getParcelable("book")
+        books = savedInstanceState?.getParcelableArray("books") as Array<Book>?
+
+        if (book != null)
+            onBookClicked(book)
+
+        if (books != null)
+            displayBooks(books)
+    }
+
 }
