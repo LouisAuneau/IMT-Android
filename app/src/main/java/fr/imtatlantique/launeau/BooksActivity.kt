@@ -24,13 +24,14 @@ class BooksActivity : AppCompatActivity(), BooksFragment.OnBookClickListener {
 
     private var books: Array<Book>? = null
     private var book: Book? = null
+    private var booksAPI: String = "http://henri-potier.xebia.fr/"
 
     /**
      * Get books from the API. Displays a toast in case no book is found.
      */
     fun getBooks() {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://henri-potier.xebia.fr/")
+            .baseUrl(booksAPI)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

@@ -36,6 +36,7 @@ class BookFragment : Fragment() {
     }
 
     private fun displayImage(url: String, imageView: ImageView) {
-        Picasso.get().load(url).resize(325, 500).into(imageView)
+        val picasso: Picasso =  Picasso.Builder(context!!).build()
+        picasso.load(url).resize(325, 500).into(imageView)
     }
 }
