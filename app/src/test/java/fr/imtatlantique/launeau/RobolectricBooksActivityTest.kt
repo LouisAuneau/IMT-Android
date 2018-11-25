@@ -30,13 +30,13 @@ class RobolectricBooksActivityTest {
 
     @Test
     fun should_not_have_book_fragment() {
-        Assert.assertNull(activity.supportFragmentManager.findFragmentByTag(BookFragment::class.java.name))
+        Assert.assertNull(activity.supportFragmentManager.findFragmentByTag(BookFragmentTest::class.java.name))
     }
 
     @Test
     fun should_have_book_fragment() {
         activity.onBookClicked(book)
-        Assert.assertNotNull(activity.supportFragmentManager.findFragmentByTag(BookFragment::class.java.name))
+        Assert.assertNotNull(activity.supportFragmentManager.findFragmentByTag(BookFragmentTest::class.java.name))
     }
 }
 
